@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LivingSpace</string>
+    <string name="back_button_desc">Kembali</string>
+    <string name="see_all">Lihat Semua</string>
+    <string name="reset">Reset</string>
+    <string name="all">Semua</string>
+
+    <string name="onboarding_title_1">Selamat Datang</string>
+    <string name="onboarding_desc_1">Temukan tempat tinggal impianmu dengan mudah dan cepat.</string>
+    <string name="skip">Lewati</string>
+    <string name="next">Lanjut</string>
+
+    <string name="login_title">Selamat Datang</string>
+    <string name="login_subtitle">Silakan masuk ke akun Anda untuk melanjutkan</string>
+    <string name="register_title">Daftar Akun</string>
+    <string name="register_subtitle">Buat akun baru untuk mulai mencari kosan</string>
+    <string name="email">Email</string>
+    <string name="email_hint">contoh@email.com</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Konfirmasi Password</string>
+    <string name="forgot_password">Lupa Password?</string>
+    <string name="login">Masuk</string>
+    <string name="register_now">Daftar Sekarang</string>
+    <string name="dont_have_account">Belum punya akun? Daftar sekarang</string>
+    <string name="already_have_account">Sudah punya akun?</string>
+    <string name="toggle_password_visibility">Lihat Password</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="full_name_hint">Masukkan nama lengkap</string>
+    <string name="phone">Nomor HP</string>
+    <string name="phone_hint">08xxxxxxxxxx</string>
+
+    <string name="welcome_back">Selamat Datang Kembali</string>
+    <string name="search_hint">Cari kosan atau lokasi...</string>
+    <string name="kosan">Kosan</string>
+    <string name="rating">Rating</string>
+    <string name="location">Lokasi</string>
+    <string name="recommended_for_you">Rekomendasi Untukmu</string>
+    <string name="nearby_kosan">Kosan Terdekat</string>
+
+    <string name="search_kosan">Cari Kosan</string>
+    <string name="search_placeholder">Masukkan nama kosan atau daerah...</string>
+    <string name="filter_button_desc">Buka Filter</string>
+    <string name="search_result_format">Ditemukan %1$d kosan</string>
+    <string name="favorite_button_desc">Tambahkan ke favorit</string>
+
+    <string name="favorite">Favorit</string>
+    <string name="description">Deskripsi</string>
+    <string name="facilities">Fasilitas</string>
+    <string name="contact_owner">Hubungi Pemilik</string>
+    <string name="book_now">Sewa Sekarang</string>
+
+    <string name="favorite_kosan">Kosan Favorit</string>
+    <string name="favorite_count_format">%1$d kosan tersimpan</string>
+
+    <string name="filter">Filter</string>
+    <string name="kosan_type">Tipe Kosan</string>
+    <string name="putra">Putra</string>
+    <string name="putri">Putri</string>
+    <string name="campur">Campur</string>
+    <string name="price_range">Rentang Harga</string>
+    <string name="minimum">Minimum</string>
+    <string name="maximum">Maksimum</string>
+    <string name="min_price_label">Rp 0</string>
+    <string name="max_price_label">Rp 5.000.000</string>
+    <string name="zero_label">Rp 0</string>
+    <string name="five_million_label">Rp 5JT</string>
+    <string name="min_rating">Rating Minimum</string>
+    <string name="rating_4">4.0+</string>
+    <string name="rating_4_5">4.5+</string>
+    <string name="rating_4_8">4.8+</string>
+    <string name="rating_5">5.0</string>
+    <string name="facility_wifi">WiFi</string>
+    <string name="facility_ac">AC</string>
+    <string name="facility_kasur">Kasur</string>
+    <string name="facility_lemari">Lemari</string>
+    <string name="facility_kamar_mandi_dalam">KM Dalam</string>
+    <string name="facility_dapur">Dapur</string>
+    <string name="facility_parkir">Parkir</string>
+    <string name="facility_CCTV">CCTV</string>
+    <string name="apply_filter">Terapkan Filter</string>
+
+    <string name="edit_profile">Edit Profil</string>
+    <string name="settings">Pengaturan</string>
+    <string name="help">Bantuan</string>
+    <string name="about">Tentang Aplikasi</string>
+    <string name="logout">Keluar Akun</string>
+
+    <string name="booking_form">Formulir Booking</string>
+    <string name="booking_details">Detail Penyewa</string>
+    <string name="start_date">Tanggal Mulai</string>
+    <string name="start_date_hint">Pilih tanggal</string>
+    <string name="duration">Durasi Sewa</string>
+    <string name="notes">Catatan Tambahan</string>
+    <string name="notes_hint">Ada permintaan khusus?</string>
+    <string name="price_breakdown">Rincian Harga</string>
+    <string name="total">Total Bayar</string>
+    <string name="proceed_to_payment">Lanjut Pembayaran</string>
+    <string name="booking_history">Riwayat Pesanan</string>
+    <string name="history_count">%d riwayat booking</string>
+    <string name="payment">Pembayaran</string>
+    <string name="booking_summary">Ringkasan Pesanan</string>
+    <string name="total_payment">Total Pembayaran</string>
+    <string name="payment_method">Metode Pembayaran</string>
+    <string name="payment_notice">Pastikan detail pesanan sudah benar sebelum membayar. Pesanan tidak dapat dibatalkan setelah pembayaran dikonfirmasi.</string>
+    <string name="pay_now">Bayar Sekarang</string>
+
+    <string name="nav_home">Beranda</string>
+    <string name="nav_search">Cari</string>
+    <string name="nav_favorite">Favorit</string>
+    <string name="nav_history">Riwayat</string>
+    <string name="nav_profile">Profil</string>
+
+
+</resources>
