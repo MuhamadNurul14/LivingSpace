@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LivingSpace</string>
+
+    <string name="back_button_desc">Kembali</string>
+    <string name="email">Email</string>
+    <string name="email_hint">contoh@email.com</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="full_name_hint">Masukkan nama lengkap</string>
+    <string name="phone">Nomor HP</string>
+    <string name="phone_hint">08xxxxxxxxxx</string>
+
+    <string name="onboarding_title_1">Selamat Datang</string>
+    <string name="onboarding_desc_1">Temukan tempat tinggal impianmu dengan mudah dan cepat.</string>
+
+    <string name="booking_form">Formulir Booking</string>
+    <string name="booking_details">Detail Penyewa</string>
+    <string name="start_date">Tanggal Mulai</string>
+    <string name="start_date_hint">Pilih tanggal</string>
+    <string name="duration">Durasi Sewa</string>
+    <string name="notes">Catatan Tambahan</string>
+    <string name="notes_hint">Ada permintaan khusus?</string>
+    <string name="price_breakdown">Rincian Harga</string>
+    <string name="total">Total Bayar</string>
+    <string name="proceed_to_payment">Lanjut Pembayaran</string>
+
+    <string name="payment">Pembayaran</string>
+    <string name="booking_summary">Ringkasan Pesanan</string>
+    <string name="total_payment">Total Pembayaran</string>
+    <string name="payment_method">Metode Pembayaran</string>
+    <string name="payment_notice">Pastikan detail pesanan sudah benar sebelum membayar. Pesanan tidak dapat dibatalkan setelah pembayaran dikonfirmasi.</string>
+    <string name="pay_now">Bayar Sekarang</string>
+</resources>
