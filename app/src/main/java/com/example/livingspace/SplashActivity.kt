@@ -24,13 +24,20 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateToNextScreen() {
-        val intent = if (preferenceManager.isOnboardingCompleted()) {
-            Intent(this, LoginActivity::class.java)
-        } else {
-            Intent(this, OnboardingActivity::class.java)
+        val intent = when {
+            !preferenceManager.isOnboardingCompleted() -> {
+                Intent(this, OnboardingActivity::class.java)
+            }
+            preferenceManager.isUserLoggedIn() -> {
+                Intent(this, MainActivity::class.java)
+            }
+            else -> {
+                Intent(this, LoginActivity::class.java)
+            }
         }
 
         startActivity(intent)
         finish()
     }
+
 }

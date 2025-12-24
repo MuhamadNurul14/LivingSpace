@@ -5,6 +5,8 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.livingspace.databinding.ActivityRegisterBinding
+import android.content.Intent
+
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -77,7 +79,25 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun performRegister() {
-        Toast.makeText(this, "Registrasi berhasil! Silakan login", Toast.LENGTH_SHORT).show()
+        val pref = PreferenceManager(this)
+
+        val name = binding.etName.text.toString().trim()
+        val email = binding.etEmail.text.toString().trim()
+        val phone = binding.etPhone.text.toString().trim()
+
+        // SIMPAN DATA USER
+        pref.setUserData(
+            name = name,
+            email = email,
+            phone = phone
+        )
+
+        pref.setUserLoggedIn(true)
+
+        Toast.makeText(this, "Registrasi berhasil!", Toast.LENGTH_SHORT).show()
+
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
+
 }

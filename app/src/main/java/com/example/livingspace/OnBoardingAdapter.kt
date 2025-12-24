@@ -1,10 +1,13 @@
 package com.example.livingspace
 
 import android.view.LayoutInflater
+import android.widget.ImageView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+
 
 class OnboardingAdapter(
     private val onboardingItems: List<OnboardingItem>
@@ -13,13 +16,18 @@ class OnboardingAdapter(
     inner class OnboardingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val textTitle = view.findViewById<TextView>(R.id.tvTitle)
         private val textDescription = view.findViewById<TextView>(R.id.tvDescription)
-        private val imageIllustration = view.findViewById<View>(R.id.ivIllustration)
+        private val imageIllustration = view.findViewById<ImageView>(R.id.imageIllustration)
 
-        fun bind(item: OnboardingItem) {
+
+        fun bind(item: OnboardingItem) {  // ✅ tipe jelas
             textTitle.text = item.title
             textDescription.text = item.description
-            imageIllustration.setBackgroundResource(item.imageResId)
+
+            Glide.with(imageIllustration.context)
+                .load(item.imageUrl)
+                .into(imageIllustration)
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OnboardingViewHolder {

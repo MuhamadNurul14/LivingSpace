@@ -49,6 +49,8 @@
     <string name="facilities">Fasilitas</string>
     <string name="contact_owner">Hubungi Pemilik</string>
     <string name="book_now">Sewa Sekarang</string>
+    <string name="kosan_image">Gambar kosan</string>
+
 
     <string name="favorite_kosan">Kosan Favorit</string>
     <string name="favorite_count_format">%1$d kosan tersimpan</string>

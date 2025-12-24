@@ -2,8 +2,8 @@ package com.example.livingspace
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.livingspace.databinding.ActivityDetailKosanBinding
 
 class DetailKosanActivity : AppCompatActivity() {
@@ -20,8 +20,11 @@ class DetailKosanActivity : AppCompatActivity() {
 
         preferenceManager = PreferenceManager(this)
 
-        // Get kosan data from intent
-        kosan = intent.getParcelableExtra("KOSAN_DATA")
+        // Ambil ID kosan dari intent
+        val kosanId = intent.getIntExtra("KOSAN_ID", -1)
+
+        // Cari kosan dari companion object
+        kosan = Kosan.getKosanList().find { it.id == kosanId }
 
         setupViews()
         setupListeners()
@@ -34,23 +37,17 @@ class DetailKosanActivity : AppCompatActivity() {
             binding.tvPrice.text = "Rp ${k.price / 1000}K/bulan"
             binding.tvRating.text = k.rating.toString()
             binding.tvReviews.text = "(${k.reviews} ulasan)"
+            binding.tvType.text = k.type
 
-            // Set type
-            binding.tvType.text = when(k.type) {
-                "putra" -> "Putra"
-                "putri" -> "Putri"
-                else -> "Campur"
-            }
+            binding.tvDescription.text = k.description
+            binding.tvFacilities.text = k.facilities.joinToString("\n") { "• $it" }
 
-            // Description
-            binding.tvDescription.text = "Kosan ${k.name} menawarkan kenyamanan dan lokasi strategis di ${k.location}. " +
-                    "Dilengkapi dengan berbagai fasilitas yang memadai untuk memenuhi kebutuhan Anda."
+            // Load image
+            Glide.with(this)
+                .load(k.imageUrl)
+                .into(binding.imgKosan)
 
-            // Facilities
-            val facilities = listOf("WiFi", "AC", "Kasur", "Lemari", "Kamar Mandi Dalam", "Parkir Motor")
-            binding.tvFacilities.text = facilities.joinToString("\n") { "• $it" }
-
-            // Check favorite status
+            // Favorite
             isFavorite = preferenceManager.isFavorite(k.id)
             updateFavoriteIcon()
         }
@@ -68,13 +65,13 @@ class DetailKosanActivity : AppCompatActivity() {
         binding.btnBookNow.setOnClickListener {
             kosan?.let { k ->
                 val intent = Intent(this, BookingActivity::class.java)
-                intent.putExtra("KOSAN_DATA", k)
+                intent.putExtra("KOSAN_ID", k.id)
                 startActivity(intent)
             }
         }
 
         binding.btnContact.setOnClickListener {
-            // TODO: Implement contact owner
+            // Bisa lanjut WhatsApp / Dial
         }
     }
 
@@ -92,10 +89,11 @@ class DetailKosanActivity : AppCompatActivity() {
     }
 
     private fun updateFavoriteIcon() {
-        if (isFavorite) {
-            binding.btnFavorite.setImageResource(android.R.drawable.star_big_on)
-        } else {
-            binding.btnFavorite.setImageResource(android.R.drawable.star_big_off)
-        }
+        binding.btnFavorite.setImageResource(
+            if (isFavorite)
+                android.R.drawable.star_big_on
+            else
+                android.R.drawable.star_big_off
+        )
     }
 }

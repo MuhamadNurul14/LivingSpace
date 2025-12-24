@@ -30,16 +30,24 @@ class FavoriteActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         adapter = KosanAdapter(
             kosanList = favoriteKosan,
-            onItemClick = { kosan -> navigateToDetail(kosan) },
-            onFavoriteClick = { kosan -> toggleFavorite(kosan) },
-            isFavorite = { id -> preferenceManager.isFavorite(id) }
+            preferenceManager = preferenceManager,
+            onItemClick = { navigateToDetail(it) },
+            onFavoriteRemoved = { kosan ->
+                val index = favoriteKosan.indexOfFirst { it.id == kosan.id }
+                if (index != -1) {
+                    favoriteKosan.removeAt(index)
+                    adapter.notifyItemRemoved(index)
+                    binding.tvFavoriteCount.text =
+                        "${favoriteKosan.size} kosan tersimpan"
+                }
+            }
         )
 
-        binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(this@FavoriteActivity)
-            adapter = this@FavoriteActivity.adapter
-        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
     }
+
+
 
     private fun setupListeners() {
         binding.bottomNavigation.selectedItemId = R.id.nav_favorite
@@ -87,10 +95,6 @@ class FavoriteActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun toggleFavorite(kosan: Kosan) {
-        preferenceManager.removeFavorite(kosan.id)
-        loadFavorites()
-    }
 
     override fun onResume() {
         super.onResume()

@@ -37,7 +37,6 @@
             android:src="@android:drawable/btn_star_big_off"
             android:contentDescription="@string/favorite_button_desc"
             android:scaleType="centerInside"
-            app:tint="@color/pink_400"
             app:layout_constraintTop_toTopOf="@id/ivKosan"
             app:layout_constraintEnd_toEndOf="@id/ivKosan" />
 

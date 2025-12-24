@@ -24,17 +24,17 @@ class OnboardingActivity : AppCompatActivity() {
             OnboardingItem(
                 title = "Cari Kosan Mudah",
                 description = "Temukan ribuan pilihan kosan strategis di dekat kampus atau tempat kerjamu dengan mudah.",
-                imageResId = R.drawable.ic_launcher_background // Pastikan gambar ini ada di drawable, atau ganti dengan gambar lain
+                imageUrl = "https://lh3.googleusercontent.com/a/ACg8ocJ6tmCWKqn0O3q_vMqfIJG5-OO6O2XBIVq_hbQUrmaW1w_UfA=s360-c-no"
             ),
             OnboardingItem(
                 title = "Fasilitas Lengkap",
                 description = "Filter pencarian berdasarkan fasilitas seperti WiFi, AC, Kamar Mandi Dalam, dan lainnya.",
-                imageResId = R.drawable.ic_launcher_background
+                imageUrl = "https://photos.fife.usercontent.google.com/pw/AP1GczOM51xV3i4JR-LNRBRXD392JWtAKdFUKiCF0CW5CsVwBCjglDc08CZ0=w500-h500-s-no-gm?authuser=0"
             ),
             OnboardingItem(
                 title = "Pembayaran Aman",
                 description = "Booking dan bayar kosan impianmu langsung dari aplikasi dengan metode pembayaran aman.",
-                imageResId = R.drawable.ic_launcher_background
+                imageUrl = "https://photos.fife.usercontent.google.com/pw/AP1GczN2VQh2eTuLjR6uST3WAsphjUBYN6zAnhulkZva0BHclevoeyCQroV0=w500-h500-s-no-gm?authuser=0"
             )
         )
 

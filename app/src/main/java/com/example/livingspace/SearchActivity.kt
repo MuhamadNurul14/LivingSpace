@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.livingspace.databinding.ActivitySearchBinding
 
-
 class SearchActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySearchBinding
@@ -33,10 +32,9 @@ class SearchActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         adapter = KosanAdapter(
-            kosanList = filteredKosan,
-            onItemClick = { kosan -> navigateToDetail(kosan) },
-            onFavoriteClick = { kosan -> toggleFavorite(kosan) },
-            isFavorite = { id -> preferenceManager.isFavorite(id) }
+            kosanList = filteredKosan, // ✅ GANTI DI SINI
+            preferenceManager = preferenceManager,
+            onItemClick = { navigateToDetail(it) }
         )
 
         binding.recyclerView.apply {
@@ -46,60 +44,23 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        binding.apply {
-            btnBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
 
-            btnFilter.setOnClickListener {
-                startActivity(Intent(this@SearchActivity, FilterActivity::class.java))
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                filterKosan(s.toString())
             }
+        })
 
-            etSearch.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable?) {
-                    filterKosan(s.toString())
-                }
-            })
+        // Chips
+        binding.chipAll.setOnClickListener { filterByType("Semua") }
+        binding.chipPutra.setOnClickListener { filterByType("Putra") }
+        binding.chipPutri.setOnClickListener { filterByType("Putri") }
+        binding.chipCampur.setOnClickListener { filterByType("Campur") }
 
-            // Category chips
-            chipAll.setOnClickListener { filterByType("Semua") }
-            chipPutra.setOnClickListener { filterByType("Putra") }
-            chipPutri.setOnClickListener { filterByType("Putri") }
-            chipCampur.setOnClickListener { filterByType("Campur") }
-
-            // Bottom Navigation
-            setupBottomNavigation()
-        }
-    }
-
-    private fun setupBottomNavigation() {
-        binding.bottomNavigation.selectedItemId = R.id.nav_search
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
-                    true
-                }
-                R.id.nav_search -> true
-                R.id.nav_favorite -> {
-                    startActivity(Intent(this, FavoriteActivity::class.java))
-                    finish()
-                    true
-                }
-                R.id.nav_history -> {
-                    startActivity(Intent(this, HistoryActivity::class.java))
-                    finish()
-                    true
-                }
-                R.id.nav_profile -> {
-                    startActivity(Intent(this, ProfileActivity::class.java))
-                    finish()
-                    true
-                }
-                else -> false
-            }
-        }
+        setupBottomNavigation()
     }
 
     private fun loadData() {
@@ -112,13 +73,13 @@ class SearchActivity : AppCompatActivity() {
     private fun filterKosan(query: String) {
         filteredKosan.clear()
 
-        val filtered = allKosan.filter {
-            (it.name.contains(query, ignoreCase = true) ||
-                    it.location.contains(query, ignoreCase = true)) &&
+        val result = allKosan.filter {
+            (it.name.contains(query, true) ||
+                    it.location.contains(query, true)) &&
                     (selectedType == "Semua" || it.type == selectedType)
         }
 
-        filteredKosan.addAll(filtered)
+        filteredKosan.addAll(result)
         adapter.notifyDataSetChanged()
         updateResultCount()
     }
@@ -127,13 +88,10 @@ class SearchActivity : AppCompatActivity() {
         selectedType = type
         filterKosan(binding.etSearch.text.toString())
 
-        // Update chip selection
-        binding.apply {
-            chipAll.isChecked = type == "Semua"
-            chipPutra.isChecked = type == "Putra"
-            chipPutri.isChecked = type == "Putri"
-            chipCampur.isChecked = type == "Campur"
-        }
+        binding.chipAll.isChecked = type == "Semua"
+        binding.chipPutra.isChecked = type == "Putra"
+        binding.chipPutri.isChecked = type == "Putri"
+        binding.chipCampur.isChecked = type == "Campur"
     }
 
     private fun updateResultCount() {
@@ -142,16 +100,33 @@ class SearchActivity : AppCompatActivity() {
 
     private fun navigateToDetail(kosan: Kosan) {
         val intent = Intent(this, DetailKosanActivity::class.java)
-        intent.putExtra("KOSAN_DATA", kosan)
+        intent.putExtra("KOSAN_ID", kosan.id)
         startActivity(intent)
     }
 
-    private fun toggleFavorite(kosan: Kosan) {
-        if (preferenceManager.isFavorite(kosan.id)) {
-            preferenceManager.removeFavorite(kosan.id)
-        } else {
-            preferenceManager.addFavorite(kosan.id)
+    private fun setupBottomNavigation() {
+        binding.bottomNavigation.selectedItemId = R.id.nav_search
+        binding.bottomNavigation.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_home -> {
+                    startActivity(Intent(this, MainActivity::class.java))
+                    true
+                }
+                R.id.nav_search -> true
+                R.id.nav_favorite -> {
+                    startActivity(Intent(this, FavoriteActivity::class.java))
+                    true
+                }
+                R.id.nav_history -> {
+                    startActivity(Intent(this, HistoryActivity::class.java))
+                    true
+                }
+                R.id.nav_profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    true
+                }
+                else -> false
+            }
         }
-        adapter.notifyDataSetChanged()
     }
 }

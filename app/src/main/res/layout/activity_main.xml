@@ -57,12 +57,18 @@
 
                     </LinearLayout>
 
-                    <!-- Profile Image -->
-                    <View
-                        android:id="@+id/ivProfile"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:background="@drawable/logo_background" />
+                    <!-- Contoh di layout MainActivity -->
+                    <TextView
+                        android:id="@+id/tvProfileInitial"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/circle_background"
+                        android:gravity="center"
+                        android:text="U"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
 
                 </LinearLayout>
 

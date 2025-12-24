@@ -18,7 +18,8 @@ data class Kosan(
     val type: String, // Putra, Putri, Campur
     val available: Int,
     val owner: String,
-    val ownerPhone: String
+    val ownerPhone: String,
+    var isFavorite: Boolean = false
 ) : Parcelable {
 
     // Kita pindahkan data dummy ke dalam "companion object"

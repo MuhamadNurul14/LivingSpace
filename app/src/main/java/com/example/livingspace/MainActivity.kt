@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.livingspace.databinding.ActivityMainBinding
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -31,14 +30,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
-        binding.tvWelcomeName.text = preferenceManager.getUserName()
+        val name = preferenceManager.getUserName()
+        binding.tvWelcomeName.text = if (name.isNotEmpty()) "$name 👋" else "User 👋"
+
+        // Tampilkan initial sebagai profil
+        val initial = if (name.isNotEmpty()) name.first().uppercase() else "U"
+        binding.tvProfileInitial.text = initial
     }
 
     private fun setupRecyclerViews() {
+        // RECOMMENDED
         recommendedAdapter = KosanAdapter(
             kosanList = recommendedKosan,
-            onItemClick = { navigateToDetail(it) },
-            onFavoriteClick = { toggleFavorite(it) }
+            preferenceManager = preferenceManager,
+            onItemClick = { navigateToDetail(it) }
         )
 
         binding.rvRecommended.apply {
@@ -46,10 +51,11 @@ class MainActivity : AppCompatActivity() {
             adapter = recommendedAdapter
         }
 
+        // NEARBY
         nearbyAdapter = KosanAdapter(
             kosanList = nearbyKosan,
-            onItemClick = { navigateToDetail(it) },
-            onFavoriteClick = { toggleFavorite(it) }
+            preferenceManager = preferenceManager,
+            onItemClick = { navigateToDetail(it) }
         )
 
         binding.rvNearby.apply {
@@ -67,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SearchActivity::class.java))
         }
 
-        binding.ivProfile.setOnClickListener {
+        binding.tvProfileInitial.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
 
@@ -126,24 +132,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navigateToDetail(kosan: Kosan) {
-        startActivity(
-            Intent(this, DetailKosanActivity::class.java)
-                .putExtra("KOSAN_DATA", kosan)
-        )
-    }
-
-    private fun toggleFavorite(kosan: Kosan) {
-        if (preferenceManager.isFavorite(kosan.id)) {
-            preferenceManager.removeFavorite(kosan.id)
-        } else {
-            preferenceManager.addFavorite(kosan.id)
-        }
-        recommendedAdapter.notifyDataSetChanged()
-        nearbyAdapter.notifyDataSetChanged()
+        val intent = Intent(this, DetailKosanActivity::class.java)
+        intent.putExtra("KOSAN_ID", kosan.id)
+        startActivity(intent)
     }
 
     override fun onResume() {
         super.onResume()
         binding.bottomNavigation.selectedItemId = R.id.nav_home
+
+        // Refresh nama dan initial user
+        setupViews()
+
+        recommendedAdapter.notifyDataSetChanged()
+        nearbyAdapter.notifyDataSetChanged()
     }
 }
