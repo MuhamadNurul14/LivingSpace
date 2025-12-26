@@ -15,16 +15,14 @@ data class Kosan(
     val imageUrl: String,
     val description: String,
     val facilities: List<String>,
-    val type: String, // Putra, Putri, Campur
+    val type: String,
     val available: Int,
     val owner: String,
     val ownerPhone: String,
     var isFavorite: Boolean = false
 ) : Parcelable {
 
-    // Kita pindahkan data dummy ke dalam "companion object"
-    // Ini membuat data ini menjadi bagian dari class Kosan,
-    // sehingga file ini dianggap sebagai "Satu Class Utuh" (Icon C).
+
     companion object {
         fun getKosanList(): List<Kosan> {
             return listOf(

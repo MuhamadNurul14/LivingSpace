@@ -9,6 +9,6 @@ data class BookingHistory(
     val kosanName: String,
     val date: String,
     val duration: String,
-    val price: Int,
+    val price: Long,
     val status: BookingStatus
 ) : Parcelable

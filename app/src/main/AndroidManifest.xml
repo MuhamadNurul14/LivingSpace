@@ -16,7 +16,6 @@
         android:theme="@style/Theme.LivingSpace"
         tools:targetApi="31">
 
-        <!-- Splash Screen Activity -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -27,73 +26,66 @@
             </intent-filter>
         </activity>
 
-        <!-- Onboarding Activity -->
         <activity
             android:name=".OnboardingActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- Login Activity -->
         <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- Register Activity -->
         <activity
             android:name=".RegisterActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- Main Activity (Home/Dashboard) -->
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false"
+            android:theme="@style/Theme.LivingSpace.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- Search Activity -->
         <activity
             android:name=".SearchActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- Favorite Activity -->
         <activity
             android:name=".FavoriteActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- History Activity -->
         <activity
             android:name=".HistoryActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- Profile Activity -->
         <activity
             android:name=".ProfileActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- Detail Kosan Activity -->
         <activity
             android:name=".DetailKosanActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- Booking Activity -->
         <activity
             android:name=".BookingActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- Payment Activity -->
         <activity
             android:name=".PaymentActivity"
             android:exported="false"
             android:theme="@style/Theme.LivingSpace.NoActionBar" />
 
-        <!-- Filter Activity -->
         <activity
             android:name=".FilterActivity"
             android:exported="false"

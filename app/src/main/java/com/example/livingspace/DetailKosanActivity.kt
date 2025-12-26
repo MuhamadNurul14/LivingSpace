@@ -65,7 +65,9 @@ class DetailKosanActivity : AppCompatActivity() {
         binding.btnBookNow.setOnClickListener {
             kosan?.let { k ->
                 val intent = Intent(this, BookingActivity::class.java)
-                intent.putExtra("KOSAN_ID", k.id)
+
+                intent.putExtra("KOSAN_DATA", k)
+
                 startActivity(intent)
             }
         }

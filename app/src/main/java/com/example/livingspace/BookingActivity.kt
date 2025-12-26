@@ -24,7 +24,6 @@ class BookingActivity : AppCompatActivity() {
 
         preferenceManager = PreferenceManager(this)
 
-        // Ambil data dari Intent
         kosan = intent.getParcelableExtra("KOSAN_DATA")
 
         if (kosan == null) {
@@ -42,11 +41,6 @@ class BookingActivity : AppCompatActivity() {
         kosan?.let { k ->
             binding.tvKosanName.text = k.name
 
-            // Perbaikan: Pastikan ID ini ada di XML (tvLocation & tvPrice)
-            // Jika merah, hapus 2 baris ini atau update XML
-            // binding.tvLocation.text = k.location
-            // binding.tvPrice.text = "Rp ${k.price / 1000}K/bulan"
-
             val localeID = Locale("id", "ID")
             val currentDate = SimpleDateFormat("dd MMM yyyy", localeID).format(Date())
             binding.etStartDate.setText(currentDate)
@@ -56,8 +50,6 @@ class BookingActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinnerDuration.adapter = adapter
 
-            // --- PERBAIKAN UTAMA DISINI ---
-            // Menggunakan getUserName() sesuai file PreferenceManager Anda
             val name = preferenceManager.getUserName()
             val email = preferenceManager.getUserEmail()
 
@@ -93,7 +85,6 @@ class BookingActivity : AppCompatActivity() {
             val total = k.price * selectedDuration.toLong()
             binding.tvTotalPrice.text = "Rp ${total / 1000}K"
 
-            // Format string manual agar tidak error unresolved reference
             binding.tvPriceBreakdown.text = "Rp ${k.price / 1000}K x $selectedDuration bulan\nTotal: Rp ${total / 1000}K"
         }
     }
@@ -117,8 +108,29 @@ class BookingActivity : AppCompatActivity() {
 
     private fun proceedToPayment() {
         kosan?.let { k ->
+            // --- LOGIKA PENYIMPANAN DATA OTOMATIS DIMULAI DISINI ---
 
+            // 1. Generate ID Unik untuk booking ini
+            val bookingId = System.currentTimeMillis()
+
+            // 2. Buat objek data riwayat baru dengan status PENDING
+            val newBooking = BookingHistory(
+                id = bookingId,
+                kosanName = k.name,
+                date = binding.etStartDate.text.toString(),
+                duration = "$selectedDuration bulan",
+                price = k.price * selectedDuration.toLong(),
+                status = BookingStatus.PENDING
+            )
+
+            // 3. Simpan ke Repository (Gudang data sementara)
+            BookingRepository.addBooking(newBooking)
+
+            // --- PROSES PINDAH HALAMAN ---
             val intent = Intent(this, PaymentActivity::class.java)
+
+            // Masukkan ID Booking agar PaymentActivity bisa mengupdate statusnya nanti
+            intent.putExtra("BOOKING_ID", bookingId)
 
             intent.putExtra("KOSAN_DATA", k)
             intent.putExtra("DURATION", selectedDuration)
@@ -127,7 +139,6 @@ class BookingActivity : AppCompatActivity() {
             intent.putExtra("PHONE", binding.etPhone.text.toString())
             intent.putExtra("START_DATE", binding.etStartDate.text.toString())
             intent.putExtra("NOTES", binding.etNotes.text.toString())
-
             startActivity(intent)
         }
     }

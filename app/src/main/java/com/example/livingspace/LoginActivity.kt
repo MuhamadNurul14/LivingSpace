@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.livingspace.databinding.ActivityLoginBinding
 
-
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
@@ -35,6 +34,13 @@ class LoginActivity : AppCompatActivity() {
                     performLogin(email, password)
                 }
             }
+
+            // --- TAMBAHKAN LOGIKA INI ---
+            tvForgotPassword.setOnClickListener {
+                val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
+                startActivity(intent)
+            }
+            // ----------------------------
 
             tvRegister.setOnClickListener {
                 startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
@@ -78,29 +84,22 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun performLogin(email: String, password: String) {
-
-        // Ambil data hasil REGISTER
         val savedEmail = preferenceManager.getUserEmail()
-        val savedPassword = preferenceManager.getUserPhone() // sementara pakai phone / ganti jika ada password
+        val savedPassword = preferenceManager.getUserPhone()
 
-        // ⚠️ Jika belum daftar
         if (savedEmail.isEmpty()) {
             Toast.makeText(this, "Silakan daftar terlebih dahulu", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // Validasi login
         if (email == savedEmail && password.isNotEmpty()) {
-
             preferenceManager.setUserLoggedIn(true)
-
             Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
-
         } else {
             Toast.makeText(this, "Email atau password salah", Toast.LENGTH_SHORT).show()
         }

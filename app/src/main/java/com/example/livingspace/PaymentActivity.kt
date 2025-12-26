@@ -7,7 +7,6 @@ import android.os.Looper
 import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.livingspace.databinding.ActivityPaymentBinding
 
@@ -17,8 +16,8 @@ class PaymentActivity : AppCompatActivity() {
     private lateinit var preferenceManager: PreferenceManager
     private var kosan: Kosan? = null
     private var duration = 1
-    private var totalPrice = 0
-    private var selectedPaymentMethod = ""
+    private var totalPrice: Long = 0L // Diubah ke Long untuk menghindari mismatch
+    private var bookingId: Long = -1L // Menangkap ID dari BookingActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +26,10 @@ class PaymentActivity : AppCompatActivity() {
 
         preferenceManager = PreferenceManager(this)
 
-        // Get data from intent
+        // Tangkap data dari Intent
         kosan = intent.getParcelableExtra("KOSAN_DATA")
         duration = intent.getIntExtra("DURATION", 1)
+        bookingId = intent.getLongExtra("BOOKING_ID", -1L) // ID Unik tertangkap di sini
 
         setupViews()
         setupListeners()
@@ -39,14 +39,10 @@ class PaymentActivity : AppCompatActivity() {
         kosan?.let { k ->
             binding.tvKosanName.text = k.name
 
-            // --- BAGIAN INI DIHAPUS KARENA ID 'tvDuration' SUDAH TIDAK ADA DI XML ---
-            // binding.tvDuration.text = "$duration bulan"
-            // ------------------------------------------------------------------------
-
-            totalPrice = k.price * duration
+            // Hitung total dengan tipe Long
+            totalPrice = k.price.toLong() * duration
             binding.tvTotalAmount.text = "Rp ${totalPrice / 1000}K"
 
-            // Show booking details
             val fullName = intent.getStringExtra("FULL_NAME") ?: ""
             val email = intent.getStringExtra("EMAIL") ?: ""
             val phone = intent.getStringExtra("PHONE") ?: ""
@@ -81,31 +77,48 @@ class PaymentActivity : AppCompatActivity() {
         }
     }
 
+    private var selectedPaymentMethod = ""
+
     private fun processPayment() {
-        // Show loading
         binding.progressBar.visibility = View.VISIBLE
         binding.btnPayNow.isEnabled = false
         binding.btnPayNow.text = "Memproses..."
 
+        // Simulasi proses bank selama 2 detik
         Handler(Looper.getMainLooper()).postDelayed({
             binding.progressBar.visibility = View.GONE
+
+            // --- LOGIKA UPDATE STATUS DIMULAI ---
+            if (bookingId != -1L) {
+                // Update status di Repository menjadi SUCCESS
+                BookingRepository.updateStatusToSuccess(bookingId)
+            }
+            // --- LOGIKA UPDATE STATUS SELESAI ---
+
             showSuccessDialog()
         }, 2000)
     }
 
     private fun showSuccessDialog() {
-        AlertDialog.Builder(this)
+        androidx.appcompat.app.AlertDialog.Builder(this)
             .setTitle("Pembayaran Berhasil")
-            .setMessage("Pembayaran Anda telah berhasil diproses. Silakan cek email untuk detail booking.")
-            .setPositiveButton("OK") { _, _ ->
-                navigateToHome()
+            .setMessage("Pembayaran Anda telah berhasil diproses. Silakan cek riwayat untuk detail booking.")
+            .setPositiveButton("Cek Riwayat") { _, _ ->
+                navigateToHistory() // Langsung arahkan ke History untuk cek hasil otomatisnya
             }
             .setCancelable(false)
             .show()
     }
 
+    private fun navigateToHistory() {
+        // Pindah ke HistoryActivity dan hapus tumpukan activity agar tidak bisa "Back" ke bayar lagi
+        val intent = Intent(this, HistoryActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
     private fun navigateToHome() {
-        // Pastikan Anda memiliki MainActivity. Jika belum, buat filenya (lihat langkah 2 di bawah)
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)

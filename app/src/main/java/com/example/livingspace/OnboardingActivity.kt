@@ -24,17 +24,17 @@ class OnboardingActivity : AppCompatActivity() {
             OnboardingItem(
                 title = "Cari Kosan Mudah",
                 description = "Temukan ribuan pilihan kosan strategis di dekat kampus atau tempat kerjamu dengan mudah.",
-                imageUrl = "https://lh3.googleusercontent.com/a/ACg8ocJ6tmCWKqn0O3q_vMqfIJG5-OO6O2XBIVq_hbQUrmaW1w_UfA=s360-c-no"
+                imageUrl = "https://storage.googleapis.com/storage-ajaib-prd-platform-wp-artifact/2020/10/Kos-kosan.jpg"
             ),
             OnboardingItem(
                 title = "Fasilitas Lengkap",
                 description = "Filter pencarian berdasarkan fasilitas seperti WiFi, AC, Kamar Mandi Dalam, dan lainnya.",
-                imageUrl = "https://photos.fife.usercontent.google.com/pw/AP1GczOM51xV3i4JR-LNRBRXD392JWtAKdFUKiCF0CW5CsVwBCjglDc08CZ0=w500-h500-s-no-gm?authuser=0"
+                imageUrl = "https://thumb.viva.id/vivatangerang/665x374/2025/05/11/6820240de870a-tipe-kos-kosan-terbaik-di-indonesia_.jpg"
             ),
             OnboardingItem(
                 title = "Pembayaran Aman",
                 description = "Booking dan bayar kosan impianmu langsung dari aplikasi dengan metode pembayaran aman.",
-                imageUrl = "https://photos.fife.usercontent.google.com/pw/AP1GczN2VQh2eTuLjR6uST3WAsphjUBYN6zAnhulkZva0BHclevoeyCQroV0=w500-h500-s-no-gm?authuser=0"
+                imageUrl = "https://ykpbni.or.id/uploads/publikasi/3737-Bisnis_Kost.jpg"
             )
         )
 
