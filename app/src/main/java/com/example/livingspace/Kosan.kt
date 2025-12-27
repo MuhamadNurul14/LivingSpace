@@ -36,11 +36,11 @@ data class Kosan(
                     distance = "0.5 km",
                     imageUrl = "https://images.unsplash.com/photo-1638454668466-e8dbd5462f20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsdXh1cnklMjBhcGFydG1lbnQlMjBiZWRyb29tfGVufDF8fHx8MTc2NTI5NTk5Nnww&ixlib=rb-4.1.0&q=80&w=1080",
                     description = "Kosan premium dengan fasilitas lengkap, dekat dengan kampus dan pusat perbelanjaan. Lingkungan aman dan nyaman.",
-                    facilities = listOf("WiFi", "AC", "Kasur", "Lemari", "Kamar Mandi Dalam", "Dapur Bersama", "Parkir Motor"),
+                    facilities = listOf("WiFi", "AC", "Kasur", "Lemari", "Kamar Mandi Dalam", "Dapur", "Parkir"),
                     type = "Campur",
                     available = 3,
                     owner = "Ibu Siti Rahayu",
-                    ownerPhone = "+62 812-3456-7890"
+                    ownerPhone = "+62 831-3731-0583"
                 ),
                 Kosan(
                     id = 2,
@@ -56,7 +56,7 @@ data class Kosan(
                     type = "Campur",
                     available = 2,
                     owner = "Bapak Andi Wijaya",
-                    ownerPhone = "+62 813-9876-5432"
+                    ownerPhone = "+62 831-3731-0583"
                 ),
                 Kosan(
                     id = 3,
@@ -68,11 +68,11 @@ data class Kosan(
                     distance = "0.3 km",
                     imageUrl = "https://images.unsplash.com/photo-1594130139005-3f0c0f0e7c5e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3p5JTIwYm9hcmRpbmclMjBob3VzZXxlbnwxfHx8fDE3NjUzODA1MDF8MA&ixlib=rb-4.1.0&q=80&w=1080",
                     description = "Kosan nyaman dengan harga terjangkau. Cocok untuk mahasiswa yang mencari tempat dekat kampus.",
-                    facilities = listOf("WiFi", "Kasur", "Lemari", "Kamar Mandi Luar", "Dapur Bersama", "Jemuran"),
+                    facilities = listOf("WiFi", "Kasur", "Lemari", "Kamar Mandi Luar", "Dapur", "Jemuran"),
                     type = "Putri",
                     available = 5,
                     owner = "Ibu Dewi Lestari",
-                    ownerPhone = "+62 856-1234-5678"
+                    ownerPhone = "+62 831-3731-0583"
                 ),
                 Kosan(
                     id = 4,
@@ -88,7 +88,7 @@ data class Kosan(
                     type = "Putra",
                     available = 4,
                     owner = "Bapak Hendra Kusuma",
-                    ownerPhone = "+62 821-5555-6666"
+                    ownerPhone = "+62 831-3731-0583"
                 ),
                 Kosan(
                     id = 5,
@@ -104,7 +104,7 @@ data class Kosan(
                     type = "Putri",
                     available = 3,
                     owner = "Ibu Linda Permata",
-                    ownerPhone = "+62 877-8888-9999"
+                    ownerPhone = "+62 831-3731-0583"
                 ),
                 Kosan(
                     id = 6,
@@ -116,11 +116,11 @@ data class Kosan(
                     distance = "2.1 km",
                     imageUrl = "https://images.unsplash.com/photo-1709056330726-00a8ea31059a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBib2FyZGluZyUyMGhvdXNlJTIwZXh0ZXJpb3J8ZW58MXx8fHwxNzY1Mzc4Mzk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
                     description = "Kosan hemat dengan fasilitas standar. Cocok untuk mahasiswa dengan budget terbatas.",
-                    facilities = listOf("WiFi", "Kasur", "Lemari", "Kamar Mandi Luar", "Dapur Bersama"),
+                    facilities = listOf("WiFi", "Kasur", "Lemari", "Kamar Mandi Luar", "Dapur"),
                     type = "Campur",
                     available = 6,
                     owner = "Bapak Surya Atmaja",
-                    ownerPhone = "+62 858-2222-3333"
+                    ownerPhone = "+62 831-3731-0583"
                 ),
                 Kosan(
                     id = 7,
@@ -136,7 +136,7 @@ data class Kosan(
                     type = "Campur",
                     available = 2,
                     owner = "PT. Living Premium",
-                    ownerPhone = "+62 274-1234-567"
+                    ownerPhone = "+62 831-3731-0583"
                 ),
                 Kosan(
                     id = 8,
@@ -148,11 +148,11 @@ data class Kosan(
                     distance = "1.8 km",
                     imageUrl = "https://images.unsplash.com/photo-1515263487990-61b07816b324?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHVkZW50JTIwYXBhcnRtZW50JTIwcm9vbXxlbnwxfHx8fDE3NjUzNzgzOTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
                     description = "Kosan dengan suasana kekeluargaan. Area parkir luas dan taman yang asri.",
-                    facilities = listOf("WiFi", "Kipas Angin", "Kasur", "Lemari", "Kamar Mandi Luar", "Taman", "Parkir Luas"),
+                    facilities = listOf("WiFi", "Kipas Angin", "Kasur", "Lemari", "Kamar Mandi Luar", "Taman", "Parkir"),
                     type = "Putra",
                     available = 7,
                     owner = "Ibu Ratna Sari",
-                    ownerPhone = "+62 819-4444-5555"
+                    ownerPhone = "+62 831-3731-0583"
                 )
             )
         }

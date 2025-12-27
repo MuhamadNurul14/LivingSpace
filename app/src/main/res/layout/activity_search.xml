@@ -88,8 +88,8 @@
                     android:text="@string/all"
                     android:checked="true"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    app:chipBackgroundColor="@color/purple_700"
-                    android:textColor="@color/white" />
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    android:textColor="@color/chip_text_selector" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipPutra"
@@ -97,26 +97,24 @@
                     android:layout_height="wrap_content"
                     android:text="@string/putra"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    app:chipBackgroundColor="@color/purple_700"
-                    android:textColor="@color/white" />
-
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    android:textColor="@color/chip_text_selector" />
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipPutri"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/putri"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    app:chipBackgroundColor="@color/purple_700"
-                    android:textColor="@color/white" />
-
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    android:textColor="@color/chip_text_selector" />
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipCampur"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/campur"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
-                    app:chipBackgroundColor="@color/purple_700"
-                    android:textColor="@color/white" />
+                    app:chipBackgroundColor="@color/chip_background_selector"
+                    android:textColor="@color/chip_text_selector" />
 
             </com.google.android.material.chip.ChipGroup>
 

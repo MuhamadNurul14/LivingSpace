@@ -1,5 +1,7 @@
 package com.example.livingspace
 
+import android.net.Uri
+import android.widget.Toast
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -73,11 +75,42 @@ class DetailKosanActivity : AppCompatActivity() {
         }
 
         binding.btnContact.setOnClickListener {
-            // Bisa lanjut WhatsApp / Dial
+            kosan?.let { kosanData ->
+
+                val phoneNumber = kosanData.ownerPhone
+                    .replace("+", "")
+                    .replace(" ", "")
+                    .replace("-", "")
+
+                val message = """
+                Halo 👋
+                Saya tertarik dengan kosan *${kosanData.name}*.
+                Apakah masih tersedia?
+            """.trimIndent()
+
+                val url = "https://wa.me/$phoneNumber?text=${Uri.encode(message)}"
+
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(url)
+                ).apply {
+                    setPackage("com.whatsapp")
+                }
+
+                try {
+                    startActivity(intent)
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        this,
+                        "WhatsApp tidak terpasang",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
     }
 
-    private fun toggleFavorite() {
+        private fun toggleFavorite() {
         kosan?.let { k ->
             if (isFavorite) {
                 preferenceManager.removeFavorite(k.id)

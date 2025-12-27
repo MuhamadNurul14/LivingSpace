@@ -63,9 +63,28 @@ class HistoryActivity : AppCompatActivity() {
                     finish()
                     true
                 }
+
                 R.id.nav_history -> true
 
-                else -> false
+                R.id.nav_favorite -> {
+                    startActivity(Intent(this, FavoriteActivity::class.java))
+                    finish()
+                    true
+                }
+
+                R.id.nav_search -> {
+                    startActivity(Intent(this, SearchActivity::class.java))
+                    finish()
+                    true
+                }
+
+                R.id.nav_profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    finish()
+                    true
+                }
+
+                else -> true
             }
         }
     }
