@@ -1,5 +1,6 @@
 package com.example.livingspace
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -25,7 +26,6 @@ class BookingActivity : AppCompatActivity() {
         preferenceManager = PreferenceManager(this)
 
         kosan = intent.getParcelableExtra("KOSAN_DATA")
-
         if (kosan == null) {
             Toast.makeText(this, "Data Kosan tidak ditemukan", Toast.LENGTH_SHORT).show()
             finish()
@@ -33,6 +33,7 @@ class BookingActivity : AppCompatActivity() {
         }
 
         setupViews()
+        setupDatePicker()
         setupListeners()
         calculateTotal()
     }
@@ -41,80 +42,128 @@ class BookingActivity : AppCompatActivity() {
         kosan?.let { k ->
             binding.tvKosanName.text = k.name
 
+            // Set tanggal hari ini
             val localeID = Locale("id", "ID")
-            val currentDate = SimpleDateFormat("dd MMM yyyy", localeID).format(Date())
-            binding.etStartDate.setText(currentDate)
+            val formatter = SimpleDateFormat("dd MMM yyyy", localeID)
+            binding.etStartDate.setText(formatter.format(Date()))
 
+            // Spinner durasi
             val durations = arrayOf("1 bulan", "3 bulan", "6 bulan", "12 bulan")
-            val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, durations)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            val adapter = ArrayAdapter(
+                this,
+                R.layout.spinner_item,
+                durations
+            )
+            adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
             binding.spinnerDuration.adapter = adapter
 
+            // Auto fill user data
             val name = preferenceManager.getUserName()
             val email = preferenceManager.getUserEmail()
 
-            if (name != "User" && name.isNotEmpty()) binding.etFullName.setText(name)
-            if (email.isNotEmpty()) binding.etEmail.setText(email)
+            if (name.isNotEmpty() && name != "User") {
+                binding.etFullName.setText(name)
+            }
+            if (email.isNotEmpty()) {
+                binding.etEmail.setText(email)
+            }
         }
     }
 
     private fun setupListeners() {
         binding.btnBack.setOnClickListener { finish() }
 
-        binding.spinnerDuration.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: android.widget.AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
-                selectedDuration = when(position) {
-                    0 -> 1
-                    1 -> 3
-                    2 -> 6
-                    3 -> 12
-                    else -> 1
+        binding.spinnerDuration.onItemSelectedListener =
+            object : android.widget.AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: android.widget.AdapterView<*>?,
+                    view: android.view.View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    selectedDuration = when (position) {
+                        0 -> 1
+                        1 -> 3
+                        2 -> 6
+                        3 -> 12
+                        else -> 1
+                    }
+                    calculateTotal()
                 }
-                calculateTotal()
+
+                override fun onNothingSelected(parent: android.widget.AdapterView<*>?) {
+                    selectedDuration = 1
+                }
             }
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>?) { selectedDuration = 1 }
-        }
 
         binding.btnProceedPayment.setOnClickListener {
-            if (validateForm()) proceedToPayment()
+            if (validateForm()) {
+                proceedToPayment()
+            }
+        }
+    }
+
+    private fun setupDatePicker() {
+        val calendar = Calendar.getInstance()
+
+        binding.etStartDate.setOnClickListener {
+            val datePicker = DatePickerDialog(
+                this,
+                { _, year, month, dayOfMonth ->
+                    calendar.set(year, month, dayOfMonth)
+
+                    val localeID = Locale("id", "ID")
+                    val formatter = SimpleDateFormat("dd MMM yyyy", localeID)
+                    binding.etStartDate.setText(formatter.format(calendar.time))
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            )
+
+            // Tidak bisa pilih tanggal lampau
+            datePicker.datePicker.minDate = System.currentTimeMillis()
+
+            datePicker.show()
         }
     }
 
     private fun calculateTotal() {
         kosan?.let { k ->
             val total = k.price * selectedDuration.toLong()
-            binding.tvTotalPrice.text = "Rp ${total / 1000}K"
 
-            binding.tvPriceBreakdown.text = "Rp ${k.price / 1000}K x $selectedDuration bulan\nTotal: Rp ${total / 1000}K"
+            binding.tvTotalPrice.text = "Rp ${total / 1000}K"
+            binding.tvPriceBreakdown.text =
+                "Rp ${k.price / 1000}K x $selectedDuration bulan\nTotal: Rp ${total / 1000}K"
         }
     }
 
     private fun validateForm(): Boolean {
-        var isValid = true
+        var valid = true
+
         if (binding.etFullName.text.toString().trim().isEmpty()) {
             binding.etFullName.error = "Wajib diisi"
-            isValid = false
+            valid = false
         }
+
         if (binding.etEmail.text.toString().trim().isEmpty()) {
             binding.etEmail.error = "Wajib diisi"
-            isValid = false
+            valid = false
         }
+
         if (binding.etPhone.text.toString().trim().isEmpty()) {
             binding.etPhone.error = "Wajib diisi"
-            isValid = false
+            valid = false
         }
-        return isValid
+
+        return valid
     }
 
     private fun proceedToPayment() {
         kosan?.let { k ->
-            // --- LOGIKA PENYIMPANAN DATA OTOMATIS DIMULAI DISINI ---
-
-            // 1. Generate ID Unik untuk booking ini
             val bookingId = System.currentTimeMillis()
 
-            // 2. Buat objek data riwayat baru dengan status PENDING
-            val newBooking = BookingHistory(
+            val booking = BookingHistory(
                 id = bookingId,
                 kosanName = k.name,
                 date = binding.etStartDate.text.toString(),
@@ -123,15 +172,10 @@ class BookingActivity : AppCompatActivity() {
                 status = BookingStatus.PENDING
             )
 
-            // 3. Simpan ke Repository (Gudang data sementara)
-            BookingRepository.addBooking(newBooking)
+            BookingRepository.addBooking(booking)
 
-            // --- PROSES PINDAH HALAMAN ---
             val intent = Intent(this, PaymentActivity::class.java)
-
-            // Masukkan ID Booking agar PaymentActivity bisa mengupdate statusnya nanti
             intent.putExtra("BOOKING_ID", bookingId)
-
             intent.putExtra("KOSAN_DATA", k)
             intent.putExtra("DURATION", selectedDuration)
             intent.putExtra("FULL_NAME", binding.etFullName.text.toString())
@@ -139,6 +183,7 @@ class BookingActivity : AppCompatActivity() {
             intent.putExtra("PHONE", binding.etPhone.text.toString())
             intent.putExtra("START_DATE", binding.etStartDate.text.toString())
             intent.putExtra("NOTES", binding.etNotes.text.toString())
+
             startActivity(intent)
         }
     }
