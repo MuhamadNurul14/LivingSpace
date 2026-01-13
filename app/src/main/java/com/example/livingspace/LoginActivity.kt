@@ -35,12 +35,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
 
-            // --- TAMBAHKAN LOGIKA INI ---
-            tvForgotPassword.setOnClickListener {
-
-            }
-            // ----------------------------
-
             tvRegister.setOnClickListener {
                 startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
             }
@@ -84,15 +78,16 @@ class LoginActivity : AppCompatActivity() {
 
     private fun performLogin(email: String, password: String) {
         val savedEmail = preferenceManager.getUserEmail()
-        val savedPassword = preferenceManager.getUserPhone()
+        val savedPassword = preferenceManager.getUserPassword() // ✅ BENAR
 
         if (savedEmail.isEmpty()) {
             Toast.makeText(this, "Silakan daftar terlebih dahulu", Toast.LENGTH_SHORT).show()
             return
         }
 
-        if (email == savedEmail && password.isNotEmpty()) {
+        if (email == savedEmail && password == savedPassword) {
             preferenceManager.setUserLoggedIn(true)
+
             Toast.makeText(this, "Login berhasil!", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, MainActivity::class.java)

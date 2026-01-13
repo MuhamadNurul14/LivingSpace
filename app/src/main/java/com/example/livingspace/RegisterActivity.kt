@@ -1,27 +1,30 @@
 package com.example.livingspace
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.livingspace.databinding.ActivityRegisterBinding
-import android.content.Intent
-
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
+    private lateinit var preferenceManager: PreferenceManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        preferenceManager = PreferenceManager(this)
+
         setupListeners()
     }
 
     private fun setupListeners() {
         binding.apply {
+
             btnRegister.setOnClickListener {
                 if (validateInput()) {
                     performRegister()
@@ -79,25 +82,24 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun performRegister() {
-        val pref = PreferenceManager(this)
-
         val name = binding.etName.text.toString().trim()
         val email = binding.etEmail.text.toString().trim()
         val phone = binding.etPhone.text.toString().trim()
+        val password = binding.etPassword.text.toString()
 
-        // SIMPAN DATA USER
-        pref.setUserData(
+        preferenceManager.setUserData(
             name = name,
             email = email,
-            phone = phone
+            phone = phone,
+            password = password
         )
 
-        pref.setUserLoggedIn(true)
+        // Auto login setelah register
+        preferenceManager.setUserLoggedIn(true)
 
         Toast.makeText(this, "Registrasi berhasil!", Toast.LENGTH_SHORT).show()
 
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
-
 }

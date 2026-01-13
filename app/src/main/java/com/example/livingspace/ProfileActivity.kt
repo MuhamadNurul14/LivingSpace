@@ -83,7 +83,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun logout() {
-        preferenceManager.clearUserData()
+        preferenceManager.logout()
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
